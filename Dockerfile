@@ -1,3 +1,8 @@
 FROM 172.22.10.72:8888/ynjc/java
-COPY * /opt/rocketmq-dashboard/
-RUN ls -ahR /opt/rocketmq-dashboard/
+RUN mkdir -p /opt/board
+COPY rocketmq-dashboard /opt/board/
+# RUN ["/bin/bash", "-c", "wget https://dlcdn.apache.org/maven/maven-3/3.8.8/binaries/apache-maven-3.8.8-bin.tar.gz -P /opt/maven/"]
+WORKDIR /opt/board/
+RUN ls -ah /opt/board/
+RUN ["/bin/bash", "-c", "tar -zxf apache-maven-3.8.8-bin.tar.gz"]
+RUN ["/bin/bash", "-c", "apache-maven-3.8.8/bin/mvn clean package -Dmaven.test.skip=true"]
